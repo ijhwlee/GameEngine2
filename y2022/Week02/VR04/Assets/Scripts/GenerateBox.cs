@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
+using Random = UnityEngine.Random;
 
 public class GenerateBox : XRBaseInteractable
 {
@@ -15,6 +17,26 @@ public class GenerateBox : XRBaseInteractable
     private void Update()
     {
         //Debug.Log("[DEBUG-hwlee]GenBox Update() called, m_RigidBody = " + m_Rigidbody);
+        if (Input.GetKeyDown(KeyCode.Joystick1Button0))
+        {
+            Debug.Log("Joystick1Button0 key was pressed.");
+        }
+        if (Input.anyKeyDown)
+        {
+            KeyCode keyCode = getCurrentKeyDown();
+            Debug.Log("["+keyCode+"] key was pressed.");
+        }
+
+    }
+    public KeyCode getCurrentKeyDown()
+    {
+        KeyCode finalKeyCode = KeyCode.None;
+        foreach (KeyCode kcode in Enum.GetValues(typeof(KeyCode))) { if (Input.GetKey(kcode)) { finalKeyCode = kcode; } }
+        if (finalKeyCode == KeyCode.None)
+        {
+            Debug.Log("Cannot find the key.");
+        }
+        return finalKeyCode;
     }
     protected override void Awake()
     {
@@ -23,21 +45,30 @@ public class GenerateBox : XRBaseInteractable
         if (m_Rigidbody == null)
             Debug.LogError("GenerateBox Interactable does not have a required Rigidbody.", this);
     }
-    void GenBox()
+    public void GenBox()
     {
         Debug.Log("[DEBUG-hwlee]GenBox called, m_RigidBody = "+m_Rigidbody);
         Rigidbody box = Instantiate(m_Box, m_Rigidbody.transform);
         Color customColor = new Color(Random.value, Random.value, Random.value, 1.0f);
         box.GetComponent<Renderer>().material.SetColor("_Color", customColor);
-        Vector3 direction = new Vector3(Random.value, Random.value, Random.value);
+        Vector3 direction = new Vector3(Random.value*2 -1, Random.value, Random.value*2-1);
         direction.Normalize();
-        box.AddForce(direction*m_force*Random.value);
+        Debug.Log("[DEBUG-hwlee]GenBox called, m_RigidBody = " + m_Rigidbody+", direction = "+direction);
+        box.AddForce(direction*m_force);
+    }
+    public void Hovered()
+    {
+        Debug.Log("[DEBUG-hwlee]Hovered called, m_RigidBody = " + m_Rigidbody);
+    }
+    public void Activated()
+    {
+        Debug.Log("[DEBUG-hwlee]Activated called, m_RigidBody = " + m_Rigidbody);
     }
     protected override void OnSelectEntered(SelectEnterEventArgs args)
     {
         base.OnSelectEntered(args);
-        Debug.Log("[DEBUG-hwlee]OnSelectEntered called, args = "+args);
-        GenBox();
+        //Debug.Log("[DEBUG-hwlee]OnSelectEntered called, args = "+args);
+        //GenBox();
     }
     protected override void OnSelectEntering(SelectEnterEventArgs args)
     {
