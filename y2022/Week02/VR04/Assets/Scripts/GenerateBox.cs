@@ -10,6 +10,7 @@ public class GenerateBox : XRBaseInteractable
     Rigidbody m_Rigidbody;
     public Rigidbody m_Box;
     public float m_force = 1.0f;
+    private bool _isHovered = false;
     private void Start()
     {
         //Debug.Log("[DEBUG-hwlee]GenBox Start() called, m_RigidBody = " + m_Rigidbody);
@@ -17,9 +18,10 @@ public class GenerateBox : XRBaseInteractable
     private void Update()
     {
         //Debug.Log("[DEBUG-hwlee]GenBox Update() called, m_RigidBody = " + m_Rigidbody);
-        if (Input.GetKeyDown(KeyCode.Joystick1Button0))
+        if (_isHovered && Input.GetKeyDown(KeyCode.Joystick1Button14))
         {
-            Debug.Log("Joystick1Button0 key was pressed.");
+            Debug.Log("Joystick1Button14 key was pressed.");
+            GenBox();
         }
         if (Input.anyKeyDown)
         {
@@ -79,10 +81,12 @@ public class GenerateBox : XRBaseInteractable
     {
         base.OnHoverEntered(args);
         //Debug.Log("[DEBUG-hwlee]OnHoverEntered called, args = "+args);
+        _isHovered = true;
     }
     protected override void OnHoverEntering(HoverEnterEventArgs args)
     {
         base.OnHoverEntering(args);
         //Debug.Log("[DEBUG-hwlee]OnHoverEntering called, args = "+args);
+        _isHovered=false;
     }
 }
