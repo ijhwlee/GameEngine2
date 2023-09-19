@@ -50,6 +50,11 @@ public class GenerateBox : XRBaseInteractable
   public void GenBox()
   {
     Debug.Log("[DEBUG-hwlee]GenBox called, m_RigidBody = " + m_Rigidbody);
+    if(!_isHovered)
+    {
+      Debug.Log("[DEBUG-hwlee]GenBox called, m_RigidBody NOT Hovered = " + m_Rigidbody);
+      return;
+    }
     Rigidbody box = Instantiate(m_Box, m_Rigidbody.transform);
     Color customColor = new Color(Random.value, Random.value, Random.value, 1.0f);
     box.GetComponent<Renderer>().material.SetColor("_Color", customColor);
@@ -82,11 +87,19 @@ public class GenerateBox : XRBaseInteractable
     base.OnHoverEntered(args);
     //Debug.Log("[DEBUG-hwlee]OnHoverEntered called, args = "+args);
     _isHovered = true;
+    Debug.Log("[DEBUG-hwlee]OnHoverEntered called, args = " + args+", _isHovered = "+_isHovered);
   }
   protected override void OnHoverEntering(HoverEnterEventArgs args)
   {
     base.OnHoverEntering(args);
-    //Debug.Log("[DEBUG-hwlee]OnHoverEntering called, args = "+args);
+    Debug.Log("[DEBUG-hwlee]OnHoverEntering called, args = "+args);
+    //_isHovered = true;
+  }
+  protected override void OnHoverExited(HoverExitEventArgs args)
+  {
+    base.OnHoverExited(args);
+    //Debug.Log("[DEBUG-hwlee]OnHoverExited called, args = " + args);
     _isHovered = false;
+    Debug.Log("[DEBUG-hwlee]OnHoverExited called, args = " + args + ", _isHovered = " + _isHovered);
   }
 }
