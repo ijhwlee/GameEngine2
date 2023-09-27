@@ -33,7 +33,8 @@ public class GenerateBox : XRBaseInteractable
     Color customColor = new Color(Random.value, Random.value, Random.value, 1.0f);
     // 상자의 색을 지정한다.
     aBox.GetComponent<Renderer>().material.SetColor("_Color", customColor);
-    // 상자의 방향 벡터를 생성한다.
-    Vector3 direction = new Vector3(0, 1, 0);
+    // 상자의 방향 벡터를 생성한다. x, z방향은 앞뒤, 좌우 방향으로, y 방향은 위로 향하도록 생성
+    Vector3 direction = new Vector3((2*Random.value-1), Random.value, (2*Random.value -1));
+    direction = direction.Normalize();
   }
 }
