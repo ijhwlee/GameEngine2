@@ -9,6 +9,8 @@ public class GenerateBox : XRBaseInteractable
 {
   [SerializeField]
   private GameObject boxPrefab;
+  [SerializeField]
+  private float m_Force;
   // Start is called before the first frame update
   void Start()
   {
@@ -35,6 +37,8 @@ public class GenerateBox : XRBaseInteractable
     aBox.GetComponent<Renderer>().material.SetColor("_Color", customColor);
     // 상자의 방향 벡터를 생성한다. x, z방향은 앞뒤, 좌우 방향으로, y 방향은 위로 향하도록 생성
     Vector3 direction = new Vector3((2*Random.value-1), Random.value, (2*Random.value -1));
-    direction = direction.Normalize();
+    // 방향벡터를 정규화 한다
+    direction.Normalize();
+    aBox.AddForce(direction * m_Force);
   }
 }
