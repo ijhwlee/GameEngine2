@@ -28,7 +28,7 @@ public class GenerateBox : XRBaseInteractable
     // 다음 문장은 콘솔창에 출력된다.
     Debug.Log("[DEBUG-hwlee]MakeRandomBox Position : " + position);
     // 새로운 상자를 생성한다.
-    GameObject aBox = Instantiate(boxPrefab);
+    RigidBody aBox = Instantiate(boxPrefab);
     // 상자의 위치를 테이블 중앙에 있는 상자 옆에 위치시킨다.
     aBox.transform.position = position+new Vector3(0.2f, 1.1f, 0);
     // 상자의 색을 임의로 지정하기위한 색변수를 생성한다.
