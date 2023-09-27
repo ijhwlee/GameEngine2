@@ -39,6 +39,7 @@ public class GenerateBox : XRBaseInteractable
     Vector3 direction = new Vector3((2*Random.value-1), Random.value, (2*Random.value -1));
     // 방향벡터를 정규화 한다
     direction.Normalize();
+    // 상자에 힘을 가하여 움직이게 한다.
     aBox.AddForce(direction * m_Force);
   }
 }
